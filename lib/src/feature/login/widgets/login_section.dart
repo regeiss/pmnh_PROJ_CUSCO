@@ -17,7 +17,7 @@ class LoginSection extends StatelessWidget {
         const Text('Já tem uma conta? '),
         TextButton(
           child: const Text('Entrar'),
-          onPressed: () => context.go(Routes.loginOK),
+          onPressed: () => GoRouter.of(context).go(Routes.home),
         ),
       ],
     ));

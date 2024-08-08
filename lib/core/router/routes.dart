@@ -6,7 +6,7 @@ class Routes {
   static const home = '/home';
   static const loginEmail = '/login_email';
   static const loginGoogle = '/login_google';
-  static const loginOK = '/login';
+  static const login = '/login';
   static const onboarding = '/onboarding';
   static const profile = '/profile';
   static const profileDetails = 'details';

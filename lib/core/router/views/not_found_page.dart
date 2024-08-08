@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:gtk_flutter/src/common_widgets/appbar.dart';
+import 'package:gtk_flutter/src/common_widgets/drawer.dart';
 
 class NotFoundScreen extends StatelessWidget {
   const NotFoundScreen({super.key});
@@ -22,7 +24,7 @@ class NotFoundScreen extends StatelessWidget {
 }
 
 //==============================================================================
-/// Widget for the root/initial pages in the bottom navigation bar.
+/// teste de telas
 class RootScreen extends StatelessWidget {
   /// Creates a RootScreen
   const RootScreen({
@@ -39,18 +41,12 @@ class RootScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.deepOrange[500],
-        titleTextStyle: TextStyle(
-          color: Colors.amber[200],
-          fontSize: 24,
-        ),
-        title: Text('Root of section $label'),
-        actions: [
-          Icon(Icons.more_vert),
-        ],
+      appBar: BaseAppBar(
+        title: Text('Cusco App'),
+        appBar: AppBar(),
+        widgets: <Widget>[Icon(Icons.more_vert)],
       ),
-      drawer: Drawer(),
+      drawer: MainDrawer(),
       body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,

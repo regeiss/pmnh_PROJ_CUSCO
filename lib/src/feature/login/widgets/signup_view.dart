@@ -4,7 +4,6 @@ import 'package:gtk_flutter/core/router/routes.dart';
 import '../../../../core/widgets/custom_button.dart';
 import 'package:gtk_flutter/src/feature/auth/providers/authentication_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 
@@ -72,7 +71,7 @@ class SignupView extends HookConsumerWidget {
               ),
               const SizedBox(height: 20),
               Center(
-                child: CustomButton(backgroundColor: Colors.black, title: 'Cancelar', isDisabled: false, onPressed: () => context.go(Routes.home)),
+                child: CustomButton(backgroundColor: Colors.black, title: 'Cancelar', isDisabled: false, onPressed: () => context.go(Routes.login)),
               ),
             ],
           ),

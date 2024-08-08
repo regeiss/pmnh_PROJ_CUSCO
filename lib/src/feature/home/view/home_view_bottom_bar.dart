@@ -19,7 +19,10 @@ class HomeViewBottomBar extends StatelessWidget {
         // world scenario, the items would most likely be generated from the
         // branches of the shell route, which can be fetched using
         // `navigationShell.route.branches`.
-
+        type: BottomNavigationBarType.fixed, // Fixed
+        backgroundColor: Colors.black, // <-- This works for fixed
+        selectedItemColor: Colors.greenAccent,
+        unselectedItemColor: Colors.grey,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(icon: Icon(Icons.work), label: 'Cadastro'),

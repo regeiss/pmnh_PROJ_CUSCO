@@ -3,7 +3,9 @@ import 'package:go_router/go_router.dart';
 import 'package:gtk_flutter/core/router/views/not_found_page.dart';
 import 'package:gtk_flutter/src/feature/home/view/home_view_bottom_bar.dart';
 import 'package:gtk_flutter/src/feature/login/views/login_view.dart';
+import 'package:gtk_flutter/src/feature/login/widgets/signup_view.dart';
 import 'package:gtk_flutter/src/feature/onboarding/views/onboarding_screen.dart';
+import 'package:gtk_flutter/src/feature/profile/view/profile_view.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../src/feature/onboarding/provider/onboarding_provider.dart';
 
@@ -21,6 +23,11 @@ class AppRouter {
           name: 'login', // Optional, add name to your routes. Allows you navigate by name instead of path
           path: '/login',
           builder: (context, state) => LoginView(),
+        ),
+        GoRoute(
+          name: 'loginEmail', // Optional, add name to your routes. Allows you navigate by name instead of path
+          path: '/login_email',
+          builder: (context, state) => SignupView(),
         ),
         GoRoute(
           name: 'onboarding',
@@ -70,7 +77,6 @@ class AppRouter {
                 ),
               ],
             ),
-
             StatefulShellBranch(
               routes: <RouteBase>[
                 GoRoute(
@@ -114,20 +120,20 @@ class AppRouter {
             StatefulShellBranch(
               routes: <RouteBase>[
                 GoRoute(
-                  path: '/e',
-                  builder: (BuildContext context, GoRouterState state) => const RootScreen(
-                    label: 'E',
-                    detailsPath: '/c/details',
-                  ),
-                  routes: <RouteBase>[
-                    GoRoute(
-                      path: 'details',
-                      builder: (BuildContext context, GoRouterState state) => DetailsScreen(
-                        label: 'E',
-                        extra: state.extra,
+                  path: '/profile',
+                  builder: (BuildContext context, GoRouterState state) => const ProfileView(
+                      // label: 'Perfil',
+                      // detailsPath: '/e/details',
                       ),
-                    ),
-                  ],
+                  // routes: <RouteBase>[
+                  //   GoRoute(
+                  //     path: 'profile',
+                  //     builder: (BuildContext context, GoRouterState state) => ProfileView(),
+                  //     //   label: 'E',
+                  //     //   extra: state.extra,
+                  //     // ),
+                  //   ),
+                  // ],
                 ),
               ],
             ),
