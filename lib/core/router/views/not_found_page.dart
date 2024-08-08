@@ -13,7 +13,7 @@ class NotFoundScreen extends StatelessWidget {
       ),
       body: Center(
         child: ElevatedButton(
-          onPressed: () => context.go("/home"),
+          onPressed: () => context.go("/login"),
           child: const Text("Voltar à pagina inicial"),
         ),
       ),
@@ -21,6 +21,7 @@ class NotFoundScreen extends StatelessWidget {
   }
 }
 
+//==============================================================================
 /// Widget for the root/initial pages in the bottom navigation bar.
 class RootScreen extends StatelessWidget {
   /// Creates a RootScreen
@@ -31,13 +32,8 @@ class RootScreen extends StatelessWidget {
     super.key,
   });
 
-  /// The label
   final String label;
-
-  /// The path to the detail page
   final String detailsPath;
-
-  /// The path to another detail page
   final String? secondDetailsPath;
 
   @override
@@ -93,16 +89,9 @@ class DetailsScreen extends StatefulWidget {
     super.key,
   });
 
-  /// The label to display in the center of the screen.
   final String label;
-
-  /// Optional param
   final String? param;
-
-  /// Optional extra object
   final Object? extra;
-
-  /// Wrap in scaffold
   final bool withScaffold;
 
   @override

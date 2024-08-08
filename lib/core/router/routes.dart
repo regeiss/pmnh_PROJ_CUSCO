@@ -6,11 +6,10 @@ class Routes {
   static const home = '/home';
   static const loginEmail = '/login_email';
   static const loginGoogle = '/login_google';
-  static const loginOK = '/loginOk';
-  static const homeNamedPage = '/home';
-  static const onboardingPage = '/onboarding';
-  static const profileNamedPage = '/profile';
-  static const profileDetailsNamedPage = 'details';
-  static const settingsNamedPage = '/settings';
+  static const loginOK = '/login';
+  static const onboarding = '/onboarding';
+  static const profile = '/profile';
+  static const profileDetails = 'details';
+  static const settings = '/settings';
   static Widget errorWidget(BuildContext context, GoRouterState state) => const NotFoundScreen();
 }

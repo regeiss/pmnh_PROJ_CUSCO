@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:gtk_flutter/src/theme/theme_data.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../../../../core/router/router.dart';
+import '../../../core/router/router.dart';
 
-class AppView extends ConsumerWidget {
-  const AppView({super.key});
+class MainApp extends ConsumerWidget {
+  const MainApp({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
