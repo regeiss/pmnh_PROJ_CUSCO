@@ -11,7 +11,19 @@ class ProfileView extends StatelessWidget {
       appBar: BaseAppBar(
         title: Text('Cusco App'),
         appBar: AppBar(),
-        widgets: <Widget>[Icon(Icons.more_vert)],
+        widgets: <Widget>[
+          PopupMenuButton<String>(
+            onSelected: handleClick,
+            itemBuilder: (BuildContext context) {
+              return {'Logout', 'Ajustes'}.map((String choice) {
+                return PopupMenuItem<String>(
+                  value: choice,
+                  child: Text(choice),
+                );
+              }).toList();
+            },
+          ),
+        ], //<Widget>[Icon(Icons.more_vert)],
       ),
       drawer: MainDrawer(),
       body: Stack(
@@ -50,4 +62,6 @@ class ProfileView extends StatelessWidget {
       ),
     );
   }
+
+  void handleClick(String value) {}
 }

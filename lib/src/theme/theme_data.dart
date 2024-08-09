@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class GlobalThemData {
+class GlobalThemeData {
   static final Color _lightFocusColor = Colors.black.withOpacity(0.12);
   static final Color _darkFocusColor = Colors.white.withOpacity(0.12);
 
-static ThemeData lightThemeData = themeData(lightColorScheme, _lightFocusColor);
+  static ThemeData lightThemeData = themeData(lightColorScheme, _lightFocusColor);
   static ThemeData darkThemeData = themeData(darkColorScheme, _darkFocusColor);
   static ThemeData themeData(ColorScheme colorScheme, Color focusColor) {
     return ThemeData(
@@ -14,10 +14,16 @@ static ThemeData lightThemeData = themeData(lightColorScheme, _lightFocusColor);
       highlightColor: Colors.transparent,
       focusColor: focusColor,
       elevatedButtonTheme: ElevatedButtonThemeData(
-       style: ElevatedButton. styleFrom(
+        style: ElevatedButton.styleFrom(
           foregroundColor: Colors.white,
           backgroundColor: Colors.blue,
         ),
+      ),
+      appBarTheme: const AppBarTheme(
+        backgroundColor: Colors.blue,
+        foregroundColor: Colors.white,
+        elevation: 2.0,
+        centerTitle: true,
       ),
     );
   }
@@ -31,7 +37,7 @@ static ThemeData lightThemeData = themeData(lightColorScheme, _lightFocusColor);
     onError: Color.fromARGB(255, 215, 49, 49),
     surface: Color(0xFFBAD6E8),
     onSurface: Color(0xFF372824),
-    brightness: Brightness.light,   
+    brightness: Brightness.light,
   );
 
   static const ColorScheme darkColorScheme = ColorScheme(

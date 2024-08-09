@@ -25,6 +25,7 @@ class NotFoundScreen extends StatelessWidget {
 
 //==============================================================================
 /// teste de telas
+//==============================================================================
 class RootScreen extends StatelessWidget {
   /// Creates a RootScreen
   const RootScreen({
@@ -44,7 +45,19 @@ class RootScreen extends StatelessWidget {
       appBar: BaseAppBar(
         title: Text('Cusco App'),
         appBar: AppBar(),
-        widgets: <Widget>[Icon(Icons.more_vert)],
+        widgets: <Widget>[
+          PopupMenuButton<String>(
+            onSelected: handleClick,
+            itemBuilder: (BuildContext context) {
+              return {'Logout', 'Ajustes'}.map((String choice) {
+                return PopupMenuItem<String>(
+                  value: choice,
+                  child: Text(choice),
+                );
+              }).toList();
+            },
+          ),
+        ], //<Widget>[Icon(Icons.more_vert)],
       ),
       drawer: MainDrawer(),
       body: Center(
@@ -72,6 +85,8 @@ class RootScreen extends StatelessWidget {
       ),
     );
   }
+
+  void handleClick(String value) {}
 }
 
 /// The details screen for either the A or B screen.
