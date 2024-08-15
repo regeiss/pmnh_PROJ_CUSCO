@@ -2,12 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:starter_architecture_flutter_firebase/src/common_widgets/primary_button.dart';
-import 'package:starter_architecture_flutter_firebase/src/common_widgets/responsive_center.dart';
-import 'package:starter_architecture_flutter_firebase/src/constants/app_sizes.dart';
-import 'package:starter_architecture_flutter_firebase/src/features/onboarding/presentation/onboarding_controller.dart';
-import 'package:starter_architecture_flutter_firebase/src/localization/string_hardcoded.dart';
-import 'package:starter_architecture_flutter_firebase/src/routing/app_router.dart';
+import 'package:gtk_flutter/src/common_widgets/primary_button.dart';
+import 'package:gtk_flutter/src/common_widgets/responsive_center.dart';
+import 'package:gtk_flutter/src/constants/app_sizes.dart';
+import 'package:gtk_flutter/src/feature/onboarding/presentation/onboarding_controller.dart';
 
 class OnboardingScreen extends ConsumerWidget {
   const OnboardingScreen({super.key});
@@ -37,17 +35,15 @@ class OnboardingScreen extends ConsumerWidget {
             ),
             gapH16,
             PrimaryButton(
-              text: 'Get Started'.hardcoded,
+              text: 'Get Started',
               isLoading: state.isLoading,
               onPressed: state.isLoading
                   ? null
                   : () async {
-                      await ref
-                          .read(onboardingControllerProvider.notifier)
-                          .completeOnboarding();
+                      await ref.read(onboardingControllerProvider.notifier).completeOnboarding();
                       if (context.mounted) {
                         // go to sign in page after completing onboarding
-                        context.goNamed(AppRoute.signIn.name);
+                        context.goNamed('/home');
                       }
                     },
             ),

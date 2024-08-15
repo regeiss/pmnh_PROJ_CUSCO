@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:gtk_flutter/core/router/views/not_found_page.dart';
+import 'package:gtk_flutter/src/core/router/views/not_found_page.dart';
 
 class Routes {
   static const home = '/home';

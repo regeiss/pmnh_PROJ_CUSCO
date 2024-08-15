@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gtk_flutter/core/router/routes.dart';
+import 'package:gtk_flutter/src/core/router/routes.dart';
 // import 'package:gtk_flutter/src/feature/auth/screens/login/views/email_button.dart';
-import '../../../../core/widgets/custom_button.dart';
+import '../../../common_widgets/custom_button.dart';
 import 'package:gtk_flutter/src/feature/auth/providers/authentication_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';

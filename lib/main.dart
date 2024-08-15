@@ -17,7 +17,7 @@ Future<void> main() async {
       debugPrint(error.toString());
       return true;
     };
-
+                                                                                                                                                                                                                                                                                                  
     ErrorWidget.builder = (FlutterErrorDetails details) {
       return Scaffold(
         appBar: AppBar(

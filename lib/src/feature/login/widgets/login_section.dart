@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:gtk_flutter/core/router/routes.dart';
+import 'package:gtk_flutter/src/core/router/routes.dart';
 
 class LoginSection extends StatelessWidget {
   const LoginSection({

@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../../../../firebase_options.dart';
-import '../../../../core/firebase/providers/firebase_providers.dart';
+import '../../../core/firebase/providers/firebase_providers.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 

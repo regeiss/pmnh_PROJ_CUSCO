@@ -2,8 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import 'package:starter_architecture_flutter_firebase/src/localization/string_hardcoded.dart';
-
 // Stateful navigation based on:
 // https://github.com/flutter/packages/blob/main/packages/go_router/example/lib/stateful_shell_route.dart
 class ScaffoldWithNestedNavigation extends StatelessWidget {
@@ -65,17 +63,17 @@ class ScaffoldWithNavigationBar extends StatelessWidget {
           NavigationDestination(
             icon: const Icon(Icons.work_outline),
             selectedIcon: const Icon(Icons.work),
-            label: 'Jobs'.hardcoded,
+            label: 'Jobs',
           ),
           NavigationDestination(
             icon: const Icon(Icons.view_headline_outlined),
             selectedIcon: const Icon(Icons.view_headline),
-            label: 'Entries'.hardcoded,
+            label: 'Entries',
           ),
           NavigationDestination(
             icon: const Icon(Icons.person_outline),
             selectedIcon: const Icon(Icons.person),
-            label: 'Account'.hardcoded,
+            label: 'Account',
           ),
         ],
         onDestinationSelected: onDestinationSelected,
@@ -108,17 +106,17 @@ class ScaffoldWithNavigationRail extends StatelessWidget {
               NavigationRailDestination(
                 icon: const Icon(Icons.work_outline),
                 selectedIcon: const Icon(Icons.work),
-                label: Text('Jobs'.hardcoded),
+                label: Text('Jobs'),
               ),
               NavigationRailDestination(
                 icon: const Icon(Icons.view_headline_outlined),
                 selectedIcon: const Icon(Icons.view_headline),
-                label: Text('Entries'.hardcoded),
+                label: Text('Entries'),
               ),
               NavigationRailDestination(
                 icon: const Icon(Icons.person_outline),
                 selectedIcon: const Icon(Icons.person),
-                label: Text('Account'.hardcoded),
+                label: Text('Account'),
               ),
             ],
           ),

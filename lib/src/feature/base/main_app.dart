@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:gtk_flutter/src/theme/theme_data.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../../../core/router/app_router.dart';
+import '../../core/router/app_router.dart';
 
 class MainApp extends ConsumerWidget {
   const MainApp({super.key});

@@ -1,6 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:gtk_flutter/src/feature/onboarding/provider/onboarding_provider.dart';
+import 'package:gtk_flutter/src/feature/onboarding/presentation/onboarding_controller.dart';
+// import 'package:gtk_flutter/src/feature/onboarding/provider/onboarding_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +16,9 @@ class OnboardingScreen extends ConsumerWidget {
     return IntroductionScreen(
       key: introKey,
       globalBackgroundColor: Colors.white,
-      skipStyle: ButtonStyle(textStyle: WidgetStateProperty.all(TextStyle(fontSize: 17)), foregroundColor: WidgetStateProperty.all(Colors.redAccent)),
+      skipStyle: ButtonStyle(
+          textStyle: WidgetStateProperty.all(TextStyle(fontSize: 17)),
+          foregroundColor: WidgetStateProperty.all(Colors.redAccent)),
       allowImplicitScrolling: true,
       autoScrollDuration: 300000,
       infiniteAutoScroll: true,
@@ -25,7 +28,10 @@ class OnboardingScreen extends ConsumerWidget {
           bodyWidget: Column(
             children: [
               Text('Lorem Ipsum sic amet',
-                  style: GoogleFonts.mochiyPopOne(fontSize: 25, fontWeight: FontWeight.w500, color: const Color.fromARGB(255, 248, 64, 64))),
+                  style: GoogleFonts.mochiyPopOne(
+                      fontSize: 25,
+                      fontWeight: FontWeight.w500,
+                      color: const Color.fromARGB(255, 248, 64, 64))),
               const SizedBox(height: 20),
               const Image(image: AssetImage('assets/image_placeholder.png')),
             ],
@@ -41,7 +47,10 @@ class OnboardingScreen extends ConsumerWidget {
               const SizedBox(height: 20),
               Text('Lorem Ipsum sic amet',
                   textAlign: TextAlign.left,
-                  style: GoogleFonts.mochiyPopOne(fontSize: 30, fontWeight: FontWeight.w500, color: Color.fromARGB(255, 119, 56, 199)))
+                  style: GoogleFonts.mochiyPopOne(
+                      fontSize: 30,
+                      fontWeight: FontWeight.w500,
+                      color: Color.fromARGB(255, 119, 56, 199)))
             ],
           ),
         ),
@@ -51,7 +60,10 @@ class OnboardingScreen extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text('Lorem Ipsum sic amet',
-                  style: GoogleFonts.mochiyPopOne(fontSize: 33, fontWeight: FontWeight.w500, color: const Color.fromARGB(255, 248, 64, 64))),
+                  style: GoogleFonts.mochiyPopOne(
+                      fontSize: 33,
+                      fontWeight: FontWeight.w500,
+                      color: const Color.fromARGB(255, 248, 64, 64))),
               const SizedBox(height: 20),
               const Image(image: AssetImage('assets/image_placeholder.png')),
             ],
@@ -65,7 +77,10 @@ class OnboardingScreen extends ConsumerWidget {
               const Image(image: AssetImage('assets/image_placeholder.png')),
               const SizedBox(height: 20),
               Text('Lorem Ipsum sic amet',
-                  style: GoogleFonts.mochiyPopOne(fontSize: 33, fontWeight: FontWeight.w500, color: const Color.fromARGB(255, 119, 56, 199))),
+                  style: GoogleFonts.mochiyPopOne(
+                      fontSize: 33,
+                      fontWeight: FontWeight.w500,
+                      color: const Color.fromARGB(255, 119, 56, 199))),
             ],
           ),
         ),
@@ -75,7 +90,10 @@ class OnboardingScreen extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text('Lorem Ipsum sic amet',
-                  style: GoogleFonts.mochiyPopOne(fontSize: 33, fontWeight: FontWeight.w500, color: const Color.fromARGB(255, 248, 64, 64))),
+                  style: GoogleFonts.mochiyPopOne(
+                      fontSize: 33,
+                      fontWeight: FontWeight.w500,
+                      color: const Color.fromARGB(255, 248, 64, 64))),
               const SizedBox(height: 20),
               const Image(image: AssetImage('assets/image_placeholder.png')),
             ],
@@ -89,7 +107,10 @@ class OnboardingScreen extends ConsumerWidget {
               const Image(image: AssetImage('assets/image_placeholder.png')),
               const SizedBox(height: 20),
               Text('Lorem Ipsum sic amet',
-                  style: GoogleFonts.mochiyPopOne(fontSize: 33, fontWeight: FontWeight.w500, color: const Color.fromARGB(255, 119, 56, 199))),
+                  style: GoogleFonts.mochiyPopOne(
+                      fontSize: 33,
+                      fontWeight: FontWeight.w500,
+                      color: const Color.fromARGB(255, 119, 56, 199))),
             ],
           ),
         ),
@@ -98,7 +119,10 @@ class OnboardingScreen extends ConsumerWidget {
           bodyWidget: Column(
             children: [
               Text("Lorem Ipsum sic amet!",
-                  style: GoogleFonts.mochiyPopOne(fontSize: 28, fontWeight: FontWeight.w500, color: Color.fromARGB(255, 40, 183, 125))),
+                  style: GoogleFonts.mochiyPopOne(
+                      fontSize: 28,
+                      fontWeight: FontWeight.w500,
+                      color: Color.fromARGB(255, 40, 183, 125))),
               const SizedBox(height: 30),
               Image(
                 image: const AssetImage('assets/image_placeholder.png'),
@@ -107,7 +131,10 @@ class OnboardingScreen extends ConsumerWidget {
               ),
               const SizedBox(height: 30),
               Text("Ameno dori me ",
-                  style: GoogleFonts.mochiyPopOne(fontSize: 28, fontWeight: FontWeight.w500, color: Color.fromARGB(255, 37, 119, 128))),
+                  style: GoogleFonts.mochiyPopOne(
+                      fontSize: 28,
+                      fontWeight: FontWeight.w500,
+                      color: Color.fromARGB(255, 37, 119, 128))),
             ],
           ),
         ),
@@ -120,9 +147,21 @@ class OnboardingScreen extends ConsumerWidget {
       next: const Icon(
         Icons.arrow_forward,
       ),
-      done: const Text('Pronto', style: TextStyle(fontWeight: FontWeight.w600, color: Color.fromARGB(255, 248, 64, 64))),
-      onDone: () => {ref.read(onboardingNotifierProvider.notifier).completeOnboarding(), context.go('/home')},
-      nextStyle: ButtonStyle(foregroundColor: WidgetStateProperty.all(Color.fromARGB(255, 248, 64, 64))),
+      done: const Text('Pronto',
+          style: TextStyle(
+              fontWeight: FontWeight.w600,
+              color: Color.fromARGB(255, 248, 64, 64))),
+      onDone: () async {
+        await ref
+            .read(onboardingControllerProvider.notifier)
+            .completeOnboarding();
+        if (context.mounted) {
+          context.goNamed('/home');
+        }
+      },
+      nextStyle: ButtonStyle(
+          foregroundColor:
+              WidgetStateProperty.all(Color.fromARGB(255, 248, 64, 64))),
       dotsDecorator: const DotsDecorator(
         size: Size.square(10),
         activeColor: Colors.redAccent,

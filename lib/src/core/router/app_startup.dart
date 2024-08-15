@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gtk_flutter/src/constants/app_sizes.dart';
+import 'package:gtk_flutter/src/feature/onboarding/data/onboarding_repository.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:starter_architecture_flutter_firebase/src/constants/app_sizes.dart';
-import 'package:starter_architecture_flutter_firebase/src/features/onboarding/data/onboarding_repository.dart';
 
 part 'app_startup.g.dart';
 
-// https://codewithandrea.com/articles/robust-app-initialization-riverpod/
 @Riverpod(keepAlive: true)
 Future<void> appStartup(AppStartupRef ref) async {
   ref.onDispose(() {
@@ -51,8 +50,7 @@ class AppStartupLoadingWidget extends StatelessWidget {
 }
 
 class AppStartupErrorWidget extends StatelessWidget {
-  const AppStartupErrorWidget(
-      {super.key, required this.message, required this.onRetry});
+  const AppStartupErrorWidget({super.key, required this.message, required this.onRetry});
   final String message;
   final VoidCallback onRetry;
 
