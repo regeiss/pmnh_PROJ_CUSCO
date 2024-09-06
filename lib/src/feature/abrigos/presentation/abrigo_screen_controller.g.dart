@@ -1,27 +1,27 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'auth_providers.dart';
+part of 'abrigo_screen_controller.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$authProvidersHash() => r'd06619af9ecca95c8de270dd4be04d0c9c6c72bc';
+String _$abrigosScreenControllerHash() =>
+    r'7fdee47305c1a8d6091955ab02b8dfdc779ee419';
 
-/// See also [authProviders].
-@ProviderFor(authProviders)
-final authProvidersProvider =
-    Provider<List<AuthProvider<AuthListener, AuthCredential>>>.internal(
-  authProviders,
-  name: r'authProvidersProvider',
+/// See also [AbrigosScreenController].
+@ProviderFor(AbrigosScreenController)
+final abrigosScreenControllerProvider =
+    AutoDisposeAsyncNotifierProvider<AbrigosScreenController, void>.internal(
+  AbrigosScreenController.new,
+  name: r'abrigosScreenControllerProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$authProvidersHash,
+      : _$abrigosScreenControllerHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef AuthProvidersRef
-    = ProviderRef<List<AuthProvider<AuthListener, AuthCredential>>>;
+typedef _$AbrigosScreenController = AutoDisposeAsyncNotifier<void>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, inference_failure_on_uninitialized_variable, inference_failure_on_function_return_type, inference_failure_on_untyped_parameter, deprecated_member_use_from_same_package

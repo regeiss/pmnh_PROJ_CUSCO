@@ -1,27 +1,76 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gtk_flutter/src/feature/abrigos/domain/abrigo.dart';
+import 'package:gtk_flutter/src/feature/auth/data/firebase_auth_repository.dart';
+import 'package:gtk_flutter/src/feature/auth/domain/app_user.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-class AbrigoRepository {
-  const AbrigoRepository(this._firestore);
+part 'abrigo_repository.g.dart';
+
+class AbrigosRepository {
+  const AbrigosRepository(this._firestore);
   final FirebaseFirestore _firestore;
 
-  static String entryPath(String uid, String entryId) => 'users/$uid/entries/$entryId';
-  static String entriesPath(String uid) => 'users/$uid/entries';
+  static String abrigoPath(String uid, String abrigoId) => 'users/$uid/abrigos/$abrigoId';
+  static String abrigosPath(String uid) => 'users/$uid/abrigos';
 
-  // Inclusao
-  Future<void> addEntry({required AbrigoID uid, required String nome, required bool ativo, required String comentario, required Timestamp data}) =>
-      _firestore.collection(entriesPath(uid)).add({'nome': nome, 'ativo': ativo, 'comentario': comentario, 'data': data});
+  // create
+  Future<void> addAbrigo({required UserID uid, required String name, required int ratePerHour}) => _firestore.collection(abrigosPath(uid)).add({
+        'name': name,
+        'ratePerHour': ratePerHour,
+      });
 
-  // Leitura
-  Stream<List<Abrigo>> watchEntries({required AbrigoID uid}) =>
-      queryEntries(uid: uid).snapshots().map((snapshot) => snapshot.docs.map((doc) => doc.data()).toList());
+  // update
+  Future<void> updateAbrigo({required UserID uid, required Abrigo abrigo}) => _firestore.doc(abrigoPath(uid, abrigo.id)).update(abrigo.toMap());
 
-  Query<Abrigo> queryEntries({required AbrigoID uid}) {
-    Query<Abrigo> query = _firestore.collection(entriesPath(uid)).withConverter<Abrigo>(
-          fromFirestore: (snapshot, _) => Abrigo.fromMap(snapshot.data()!, snapshot.id),
-          toFirestore: (abrigo, _) => abrigo.toMap(),
-        );
+  // delete
+  Future<void> deleteAbrigo({required UserID uid, required AbrigoID abrigoId}) => _firestore.doc(abrigoPath(uid, abrigoId)).delete();
 
-    return query;
+  // read
+  Stream<Abrigo> watchAbrigo({required UserID uid, required AbrigoID abrigoId}) => _firestore
+      .doc(abrigoPath(uid, abrigoId))
+      .withConverter<Abrigo>(
+        fromFirestore: (snapshot, _) => Abrigo.fromMap(snapshot.data()!, snapshot.id),
+        toFirestore: (abrigo, _) => abrigo.toMap(),
+      )
+      .snapshots()
+      .map((snapshot) => snapshot.data()!);
+
+  Stream<List<Abrigo>> watchAbrigos({required UserID uid}) =>
+      queryAbrigos(uid: uid).snapshots().map((snapshot) => snapshot.docs.map((doc) => doc.data()).toList());
+
+  Query<Abrigo> queryAbrigos({required UserID uid}) => _firestore.collection(abrigosPath(uid)).withConverter(
+        fromFirestore: (snapshot, _) => Abrigo.fromMap(snapshot.data()!, snapshot.id),
+        toFirestore: (abrigo, _) => abrigo.toMap(),
+      );
+
+  Future<List<Abrigo>> fetchAbrigos({required UserID uid}) async {
+    final abrigos = await queryAbrigos(uid: uid).get();
+    return abrigos.docs.map((doc) => doc.data()).toList();
   }
+}
+
+@Riverpod(keepAlive: true)
+AbrigosRepository abrigosRepository(AbrigosRepositoryRef ref) {
+  return AbrigosRepository(FirebaseFirestore.instance);
+}
+
+@riverpod
+Query<Abrigo> abrigosQuery(AbrigosQueryRef ref) {
+  final user = ref.watch(firebaseAuthProvider).currentUser;
+  if (user == null) {
+    throw AssertionError('User can\'t be null');
+  }
+  final repository = ref.watch(abrigosRepositoryProvider);
+  return repository.queryAbrigos(uid: user.uid);
+}
+
+@riverpod
+Stream<Abrigo> abrigoStream(AbrigoStreamRef ref, AbrigoID abrigoId) {
+  final user = ref.watch(firebaseAuthProvider).currentUser;
+  if (user == null) {
+    throw AssertionError('User can\'t be null');
+  }
+  final repository = ref.watch(abrigosRepositoryProvider);
+  return repository.watchAbrigo(uid: user.uid, abrigoId: abrigoId);
 }
