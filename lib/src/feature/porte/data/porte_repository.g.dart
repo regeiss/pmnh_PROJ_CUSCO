@@ -21,7 +21,7 @@ final portesRepositoryProvider = Provider<PortesRepository>.internal(
 );
 
 typedef PortesRepositoryRef = ProviderRef<PortesRepository>;
-String _$portesQueryHash() => r'9e8da06109bcbce6af2f1369668fdf24c2389b95';
+String _$portesQueryHash() => r'3bfa44130be6627d9037fbd4629cbd6e5b033d0d';
 
 /// See also [portesQuery].
 @ProviderFor(portesQuery)

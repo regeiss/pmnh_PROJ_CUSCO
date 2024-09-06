@@ -29,7 +29,7 @@ class EmptyPlaceholderWidget extends ConsumerWidget {
             PrimaryButton(
               onPressed: () {
                 final isLoggedIn = ref.watch(authRepositoryProvider).currentUser != null;
-                context.goNamed(isLoggedIn ? AppRoute.porte.name : AppRoute.signIn.name);
+                context.goNamed(isLoggedIn ? AppRoute.home.name : AppRoute.signIn.name);
               },
               text: 'Go Home',
             )

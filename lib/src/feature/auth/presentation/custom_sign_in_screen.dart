@@ -2,8 +2,7 @@ import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gtk_flutter/src/constants/app_sizes.dart';
-import 'package:gtk_flutter/src/core/firebase/providers/firebase_providers.dart';
-
+import 'package:gtk_flutter/src/feature/auth/data/firebase_auth_repository.dart';
 import 'auth_providers.dart';
 
 class CustomSignInScreen extends ConsumerWidget {
@@ -14,7 +13,7 @@ class CustomSignInScreen extends ConsumerWidget {
     final authProviders = ref.watch(authProvidersProvider);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Sign in'),
+        title: const Text('Entrar'),
       ),
       body: SignInScreen(
         providers: authProviders,
@@ -37,14 +36,14 @@ class SignInAnonymouslyFooter extends ConsumerWidget {
             Expanded(child: Divider()),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: Sizes.p8),
-              child: Text('or'),
+              child: Text('ou'),
             ),
             Expanded(child: Divider()),
           ],
         ),
         TextButton(
           onPressed: () => ref.read(firebaseAuthProvider).signInAnonymously(),
-          child: const Text('Sign in anonymously'),
+          child: const Text('Entrar anonimamente'),
         ),
       ],
     );

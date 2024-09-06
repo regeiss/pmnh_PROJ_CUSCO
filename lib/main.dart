@@ -17,7 +17,7 @@ Future<void> main() async {
       debugPrint(error.toString());
       return true;
     };
-                                                                                                                                                                                                                                                                                                  
+
     ErrorWidget.builder = (FlutterErrorDetails details) {
       return Scaffold(
         appBar: AppBar(
@@ -33,6 +33,7 @@ Future<void> main() async {
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   registerErrorHandlers();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
   runApp(const ProviderScope(child: MainApp()));
   FlutterNativeSplash.remove();
 }

@@ -151,14 +151,4 @@ class _EditJobPageState extends ConsumerState<EditPorteScreen> {
       ),
     ];
   }
-
-  Widget _buildStartDate() {
-    return DateTimePicker(
-      labelText: 'Start',
-      selectedDate: _startDate,
-      selectedTime: _startTime,
-      onSelectedDate: (date) => setState(() => _startDate = date),
-      onSelectedTime: (time) => setState(() => _startTime = time),
-    );
-  }
 }

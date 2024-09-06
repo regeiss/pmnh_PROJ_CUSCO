@@ -2,41 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gtk_flutter/src/core/router/app_startup.dart';
 import 'package:gtk_flutter/src/core/router/go_router_refresh_stream.dart';
+import 'package:gtk_flutter/src/core/router/scaffold_with_nested_navigation.dart';
 import 'package:gtk_flutter/src/core/router/views/not_found_page.dart';
+import 'package:gtk_flutter/src/feature/abrigos/presentation/abrigos_screen.dart';
 import 'package:gtk_flutter/src/feature/auth/data/firebase_auth_repository.dart';
-import 'package:gtk_flutter/src/feature/home/view/home_view_bottom_bar.dart';
-import 'package:gtk_flutter/src/feature/login/views/login_view.dart';
-import 'package:gtk_flutter/src/feature/login/widgets/signup_view.dart';
+import 'package:gtk_flutter/src/feature/auth/presentation/custom_sign_in_screen.dart';
+import 'package:gtk_flutter/src/feature/entries/presentation/entries_screen.dart';
+import 'package:gtk_flutter/src/feature/home/presentation/home_screen.dart';
 import 'package:gtk_flutter/src/feature/onboarding/data/onboarding_repository.dart';
 import 'package:gtk_flutter/src/feature/onboarding/views/onboarding_screen.dart';
-import 'package:gtk_flutter/src/feature/porte/domain/porte.dart';
-import 'package:gtk_flutter/src/feature/porte/presentation/edit_porte_screen/edit_porte_screen.dart';
-import 'package:gtk_flutter/src/feature/porte/presentation/portes_screen/portes_screen.dart';
-import 'package:gtk_flutter/src/feature/profile/view/profile_view.dart';
+import 'package:gtk_flutter/src/feature/pets/presentation/pets_screen.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-
+import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 part 'app_router.g.dart';
 
-// private navigators
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
-final _portesNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'portes');
-//final _entriesNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'entries');
-final _contaNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'conta');
-final GlobalKey<NavigatorState> sectionANavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'sectionANav');
+final _abrigosNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'portes');
+final _accountNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'entries');
+final _jobsNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'jobs');
+final _petsNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'pets');
+final _matchesNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'matches');
 
-enum AppRoute {
-  onboarding,
-  signIn,
-  portes,
-  porte,
-  addPorte,
-  editPorte,
-  entry,
-  addEntry,
-  editEntry,
-  entries,
-  profile,
-}
+enum AppRoute { onboarding, signIn, entry, addEntry, editEntry, abrigos, perfil, matches, pets, home }
 
 @riverpod
 GoRouter goRouter(GoRouterRef ref) {
@@ -44,19 +31,21 @@ GoRouter goRouter(GoRouterRef ref) {
   final appStartupState = ref.watch(appStartupProvider);
   final authRepository = ref.watch(authRepositoryProvider);
   return GoRouter(
-    initialLocation: '/login',
+    initialLocation: '/signIn',
     navigatorKey: _rootNavigatorKey,
     debugLogDiagnostics: true,
+    errorPageBuilder: (context, state) => const NoTransitionPage(
+      child: NotFoundScreen(),
+    ),
     redirect: (context, state) {
       // If the app is still initializing, show the /startup route
       if (appStartupState.isLoading || appStartupState.hasError) {
-        return '/onboarding';
+        return '/startup';
       }
       final onboardingRepository = ref.read(onboardingRepositoryProvider).requireValue;
       final didCompleteOnboarding = onboardingRepository.isOnboardingComplete();
       final path = state.uri.path;
       if (!didCompleteOnboarding) {
-        // Always check state.subloc before returning a non-null route
         // https://github.com/flutter/packages/blob/main/packages/go_router/example/lib/redirection.dart#L78
         if (path != '/onboarding') {
           return '/onboarding';
@@ -66,12 +55,12 @@ GoRouter goRouter(GoRouterRef ref) {
       final isLoggedIn = authRepository.currentUser != null;
       if (isLoggedIn) {
         if (path.startsWith('/startup') || path.startsWith('/onboarding') || path.startsWith('/signIn')) {
-          return '/login';
+          return '/home';
         }
       } else {
         if (path.startsWith('/startup') ||
             path.startsWith('/onboarding') ||
-            path.startsWith('/jobs') ||
+            path.startsWith('/home') ||
             path.startsWith('/entries') ||
             path.startsWith('/account')) {
           return '/signIn';
@@ -80,146 +69,99 @@ GoRouter goRouter(GoRouterRef ref) {
       return null;
     },
     refreshListenable: GoRouterRefreshStream(authRepository.authStateChanges()),
-    routes: <RouteBase>[
+    routes: [
       GoRoute(
-        name: 'login',
-        path: '/login',
-        builder: (context, state) => LoginView(),
-      ),
-      GoRoute(
-        name: 'loginEmail',
-        path: '/login_email',
-        builder: (context, state) => SignupView(),
-      ),
-      GoRoute(
-        name: 'onboarding',
-        path: '/onboarding',
-        builder: (context, state) => OnboardingScreen(),
-      ),
-      StatefulShellRoute.indexedStack(
-        builder: (BuildContext context, GoRouterState state, StatefulNavigationShell navigationShell) {
-          return HomeViewBottomBar(navigationShell: navigationShell);
-        },
-        branches: <StatefulShellBranch>[
-          // The route branch for the first tab of the bottom navigation bar.
-          StatefulShellBranch(
-            navigatorKey: sectionANavigatorKey,
-            routes: <RouteBase>[
-              GoRoute(
-                path: '/home',
-                builder: (BuildContext context, GoRouterState state) => const RootScreen(label: 'A', detailsPath: '/a/details'),
-                routes: <RouteBase>[
-                  GoRoute(
-                    path: 'details',
-                    builder: (BuildContext context, GoRouterState state) => const DetailsScreen(label: 'A'),
-                  ),
-                ],
-              ),
-            ],
+        path: '/startup',
+        pageBuilder: (context, state) => NoTransitionPage(
+          child: AppStartupWidget(
+            // * This is just a placeholder
+            // * The loaded route will be managed by GoRouter on state change
+            onLoaded: (_) => const SizedBox.shrink(),
           ),
-          // Porte
+        ),
+      ),
+      GoRoute(
+        path: '/onboarding',
+        name: AppRoute.onboarding.name,
+        pageBuilder: (context, state) => NoTransitionPage(
+          child: OnboardingScreen(),
+        ),
+      ),
+      GoRoute(
+        path: '/signIn',
+        name: AppRoute.signIn.name,
+        pageBuilder: (context, state) => const NoTransitionPage(
+          child: CustomSignInScreen(),
+        ),
+      ),
+      // https://github.com/flutter/packages/blob/main/packages/go_router/example/lib/stateful_shell_route.dart
+      StatefulShellRoute.indexedStack(
+        pageBuilder: (context, state, navigationShell) => NoTransitionPage(
+          child: ScaffoldWithNestedNavigation(navigationShell: navigationShell),
+        ),
+        branches: [
           StatefulShellBranch(
-            navigatorKey: _portesNavigatorKey,
+            navigatorKey: _jobsNavigatorKey,
             routes: [
               GoRoute(
-                path: '/b',
-                name: AppRoute.portes.name,
+                path: '/home',
+                name: AppRoute.home.name,
                 pageBuilder: (context, state) => const NoTransitionPage(
-                  child: PorteScreen(),
+                  child: HomeScreen(),
                 ),
-                routes: [
-                  GoRoute(
-                    path: 'add',
-                    name: AppRoute.addPorte.name,
-                    parentNavigatorKey: _portesNavigatorKey,
-                    pageBuilder: (context, state) {
-                      return const MaterialPage(
-                        fullscreenDialog: true,
-                        child: EditPorteScreen(),
-                      );
-                    },
-                  ),
-                  GoRoute(
-                    path: 'edit',
-                    name: AppRoute.editPorte.name,
-                    parentNavigatorKey: _portesNavigatorKey,
-                    pageBuilder: (context, state) {
-                      final porteId = state.pathParameters['id'];
-                      final porte = state.extra as Porte?;
-                      return MaterialPage(
-                        fullscreenDialog: true,
-                        child: EditPorteScreen(porteId: porteId, porte: porte),
-                      );
-                    },
-                  ),
-                ],
-              ),
-            ],
-          ),
-
-          StatefulShellBranch(
-            routes: <RouteBase>[
-              GoRoute(
-                path: '/c',
-                builder: (BuildContext context, GoRouterState state) => const RootScreen(
-                  label: 'C',
-                  detailsPath: '/c/details',
-                ),
-                routes: <RouteBase>[
-                  GoRoute(
-                    path: 'details',
-                    builder: (BuildContext context, GoRouterState state) => DetailsScreen(
-                      label: 'C',
-                      extra: state.extra,
-                    ),
-                  ),
-                ],
               ),
             ],
           ),
           StatefulShellBranch(
-            routes: <RouteBase>[
+            navigatorKey: _petsNavigatorKey,
+            routes: [
               GoRoute(
-                path: '/d',
-                builder: (BuildContext context, GoRouterState state) => const RootScreen(
-                  label: 'D',
-                  detailsPath: '/c/details',
+                path: '/pets',
+                name: AppRoute.pets.name,
+                pageBuilder: (context, state) => const NoTransitionPage(
+                  child: PetsScreen(),
                 ),
-                routes: <RouteBase>[
-                  GoRoute(
-                    path: 'details',
-                    builder: (BuildContext context, GoRouterState state) => DetailsScreen(
-                      label: 'D',
-                      extra: state.extra,
-                    ),
-                  ),
-                ],
               ),
             ],
           ),
           StatefulShellBranch(
-            routes: <RouteBase>[
+            navigatorKey: _abrigosNavigatorKey,
+            routes: [
               GoRoute(
-                path: '/profile',
-                builder: (BuildContext context, GoRouterState state) => const ProfileView(
-                    // label: 'Perfil',
-                    // detailsPath: '/e/details',
-                    ),
-                // routes: <RouteBase>[
-                //   GoRoute(
-                //     path: 'profile',
-                //     builder: (BuildContext context, GoRouterState state) => ProfileView(),
-                //     //   label: 'E',
-                //     //   extra: state.extra,
-                //     // ),
-                //   ),
-                // ],
+                path: '/abrigos',
+                name: AppRoute.abrigos.name,
+                pageBuilder: (context, state) => const NoTransitionPage(
+                  child: AbrigosScreen(),
+                ),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            navigatorKey: _matchesNavigatorKey,
+            routes: [
+              GoRoute(
+                path: '/matches',
+                name: AppRoute.matches.name,
+                pageBuilder: (context, state) => const NoTransitionPage(
+                  child: EntriesScreen(),
+                ),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            navigatorKey: _accountNavigatorKey,
+            routes: [
+              GoRoute(
+                path: '/account',
+                name: AppRoute.perfil.name,
+                pageBuilder: (context, state) => const NoTransitionPage(
+                  child: ProfileScreen(),
+                ),
               ),
             ],
           ),
         ],
       ),
     ],
-    errorBuilder: (context, state) => NotFoundScreen(),
   );
 }

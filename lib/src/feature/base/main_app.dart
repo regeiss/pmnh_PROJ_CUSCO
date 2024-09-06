@@ -1,3 +1,4 @@
+import 'package:firebase_ui_localizations/firebase_ui_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:gtk_flutter/src/theme/theme_data.dart';
@@ -13,11 +14,13 @@ class MainApp extends ConsumerWidget {
 
     return MaterialApp.router(
       routerConfig: goRouter,
-      locale: const Locale('pt', 'BR'),
-      supportedLocales: [const Locale('pt', 'BR'), const Locale('en', 'US')],
+      locale: const Locale('pt'),
+      supportedLocales: [const Locale('pt'), const Locale('en')],
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        FirebaseUILocalizations.delegate,
       ],
       debugShowCheckedModeBanner: false,
       themeMode: ThemeMode.light,

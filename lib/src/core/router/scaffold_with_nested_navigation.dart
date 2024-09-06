@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-// Stateful navigation based on:
 // https://github.com/flutter/packages/blob/main/packages/go_router/example/lib/stateful_shell_route.dart
 class ScaffoldWithNestedNavigation extends StatelessWidget {
   const ScaffoldWithNestedNavigation({
@@ -14,10 +13,6 @@ class ScaffoldWithNestedNavigation extends StatelessWidget {
   void _goBranch(int index) {
     navigationShell.goBranch(
       index,
-      // A common pattern when using bottom navigation bars is to support
-      // navigating to the initial location when tapping the item that is
-      // already active. This example demonstrates how to support this behavior,
-      // using the initialLocation parameter of goBranch.
       initialLocation: index == navigationShell.currentIndex,
     );
   }
@@ -59,21 +54,31 @@ class ScaffoldWithNavigationBar extends StatelessWidget {
       bottomNavigationBar: NavigationBar(
         selectedIndex: currentIndex,
         destinations: [
-          // products
+          // home
           NavigationDestination(
-            icon: const Icon(Icons.work_outline),
-            selectedIcon: const Icon(Icons.work),
-            label: 'Jobs',
+            icon: const Icon(Icons.home),
+            selectedIcon: const Icon(Icons.home),
+            label: 'Home',
           ),
           NavigationDestination(
-            icon: const Icon(Icons.view_headline_outlined),
-            selectedIcon: const Icon(Icons.view_headline),
-            label: 'Entries',
+            icon: const Icon(Icons.pets),
+            selectedIcon: const Icon(Icons.pets),
+            label: 'Pets',
           ),
           NavigationDestination(
-            icon: const Icon(Icons.person_outline),
+            icon: const Icon(Icons.shelves),
+            selectedIcon: const Icon(Icons.shelves),
+            label: 'Abrigos',
+          ),
+          NavigationDestination(
+            icon: const Icon(Icons.social_distance_rounded),
+            selectedIcon: const Icon(Icons.social_distance_rounded),
+            label: 'Matches',
+          ),
+          NavigationDestination(
+            icon: const Icon(Icons.person),
             selectedIcon: const Icon(Icons.person),
-            label: 'Account',
+            label: 'Perfil',
           ),
         ],
         onDestinationSelected: onDestinationSelected,
@@ -106,17 +111,27 @@ class ScaffoldWithNavigationRail extends StatelessWidget {
               NavigationRailDestination(
                 icon: const Icon(Icons.work_outline),
                 selectedIcon: const Icon(Icons.work),
-                label: Text('Jobs'),
+                label: Text('Home'),
               ),
               NavigationRailDestination(
                 icon: const Icon(Icons.view_headline_outlined),
                 selectedIcon: const Icon(Icons.view_headline),
-                label: Text('Entries'),
+                label: Text('Pets'),
               ),
               NavigationRailDestination(
                 icon: const Icon(Icons.person_outline),
                 selectedIcon: const Icon(Icons.person),
-                label: Text('Account'),
+                label: Text('Abrigos'),
+              ),
+              NavigationRailDestination(
+                icon: const Icon(Icons.person_outline),
+                selectedIcon: const Icon(Icons.person),
+                label: Text('Matches'),
+              ),
+              NavigationRailDestination(
+                icon: const Icon(Icons.person_outline),
+                selectedIcon: const Icon(Icons.person),
+                label: Text('Conta'),
               ),
             ],
           ),

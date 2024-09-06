@@ -7,7 +7,7 @@ part of 'edit_porte_screen_controller.dart';
 // **************************************************************************
 
 String _$editPorteScreenControllerHash() =>
-    r'6e95c6b65619ea3b5db4443eac9e907ad885937f';
+    r'4dc1b46a4723870279b2dde4f4b6e7e004917252';
 
 /// See also [EditPorteScreenController].
 @ProviderFor(EditPorteScreenController)
