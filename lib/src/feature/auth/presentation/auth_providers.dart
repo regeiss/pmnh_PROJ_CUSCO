@@ -1,5 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart'
-    hide EmailAuthProvider, AuthProvider, PhoneAuthProvider, GoogleAuthProvider, AppleAuthProvider, FacebookAuthProvider;
+    hide EmailAuthProvider, AuthProvider, PhoneAuthProvider, GoogleAuthProvider, AppleAuthProvider, FacebookAuthProvider, GithubAuthProvider, YahooAuthProvider;
 
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:firebase_ui_oauth_apple/firebase_ui_oauth_apple.dart';
@@ -12,6 +12,7 @@ part 'auth_providers.g.dart';
 @Riverpod(keepAlive: true)
 List<AuthProvider<AuthListener, AuthCredential>> authProviders(AuthProvidersRef ref) {
   return [
+    // corrigir as informações do link aqui
     EmailLinkAuthProvider(
       actionCodeSettings: ActionCodeSettings(
         url: 'https://<your-project-id>.page.link',
@@ -26,5 +27,7 @@ List<AuthProvider<AuthListener, AuthCredential>> authProviders(AuthProvidersRef 
     GoogleProvider(clientId: GOOGLE_CLIENT_ID),
     FacebookProvider(clientId: FACEBOOK_CLIENT_ID),
     AppleProvider(),
+    // GithubAuthProvider(),
+    // YahooAuthProvider(),
   ];
 }
