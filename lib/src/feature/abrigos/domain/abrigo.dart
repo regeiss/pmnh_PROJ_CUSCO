@@ -19,7 +19,7 @@ class Abrigo extends Equatable {
   bool get stringify => true;
 
   factory Abrigo.fromMap(Map<dynamic, dynamic> value, AbrigoID id) {
-    return Abrigo(id: id, nome: value['nome'], ativo: true, data: Timestamp.now(), comentario: value['comentario']);
+    return Abrigo(id: id, nome: value['nome'], ativo: value['ativo'], data: value['data'], comentario: value['comentario']);
   }
 
   Map<String, dynamic> toMap() {

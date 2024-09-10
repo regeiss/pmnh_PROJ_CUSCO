@@ -7,53 +7,24 @@ import 'package:gtk_flutter/src/common_widgets/drawer.dart';
 import 'package:gtk_flutter/src/core/router/app_router.dart';
 import 'package:gtk_flutter/src/feature/abrigos/data/abrigo_repository.dart';
 import 'package:gtk_flutter/src/feature/abrigos/domain/abrigo.dart';
-import 'package:gtk_flutter/src/feature/abrigos/presentation/abrigo_screen_controller.dart';
+import 'package:gtk_flutter/src/feature/abrigos/presentation/controller/abrigo_screen_controller.dart';
 import 'package:gtk_flutter/src/utils/async_value_ui.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:intl/intl.dart';
 
 class AbrigosScreen extends ConsumerWidget {
   const AbrigosScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // var card = SizedBox(
-    //   height: 150,
-    //   child: Card(
-    //     elevation: 1,
-    //     shape: RoundedRectangleBorder(
-    //       borderRadius: BorderRadius.all(Radius.circular(1)),
-    //     ),
-    //     child: ListTile(
-    //       dense: false,
-    //       leading: FlutterLogo(),
-    //       title: Text(
-    //         "Abrigo tal\n #31",
-    //         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-    //       ),
-    //       subtitle: Text(
-    //         "Local: Indefinida",
-    //         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-    //       ),
-    //       trailing: Icon(Icons.arrow_forward_ios),
-    //     ),
-    //   ),
-    // );
-
     return Scaffold(
       appBar: BaseAppBar(
         title: Text('Abrigos'),
         appBar: AppBar(),
         widgets: <Widget>[
-          PopupMenuButton<String>(
-            onSelected: handleClick,
-            itemBuilder: (BuildContext context) {
-              return {'Logout', 'Ajustes'}.map((String choice) {
-                return PopupMenuItem<String>(
-                  value: choice,
-                  child: Text(choice),
-                );
-              }).toList();
-            },
+          IconButton(
+            icon: const Icon(Icons.add, color: Colors.white),
+            onPressed: () => context.goNamed(AppRoute.addAbrigo.name),
           ),
         ],
       ),
@@ -67,7 +38,7 @@ class AbrigosScreen extends ConsumerWidget {
           final abrigosQuery = ref.watch(abrigosQueryProvider);
           return FirestoreListView<Abrigo>(
             query: abrigosQuery,
-            emptyBuilder: (context) => const Center(child: Text('No data')),
+            emptyBuilder: (context) => const Center(child: Text('Não há dados para exibir')),
             errorBuilder: (context, error, stackTrace) => Center(
               child: Text(error.toString()),
             ),
@@ -82,8 +53,9 @@ class AbrigosScreen extends ConsumerWidget {
                 child: AbrigoListTile(
                   abrigo: abrigo,
                   onTap: () => context.goNamed(
-                    AppRoute.abrigos.name,
+                    AppRoute.editaAbrigo.name,
                     pathParameters: {'id': abrigo.id},
+                    extra: abrigo,
                   ),
                 ),
               );
@@ -91,25 +63,6 @@ class AbrigosScreen extends ConsumerWidget {
           );
         },
       ),
-
-      // body: Padding(
-      //   padding: const EdgeInsets.all(8.0),
-      //   child: SingleChildScrollView(
-      //     child: Column(
-      //       mainAxisAlignment: MainAxisAlignment.center,
-      //       children: [
-      //         card,
-      //         gapW4,
-      //         card,
-      //         gapW4,
-      //         card,
-      //         card,
-      //         gapW4,
-      //         card,
-      //       ],
-      //     ),
-      //   ),
-      // ),
     );
   }
 
@@ -125,6 +78,7 @@ class AbrigoListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(abrigo.nome),
+      subtitle: Text(DateFormat('EEEE, MMM d, yyyy').format(abrigo.data.toDate())),
       trailing: const Icon(Icons.chevron_right),
       onTap: onTap,
     );

@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gtk_flutter/src/feature/abrigos/domain/abrigo.dart';
 import 'package:gtk_flutter/src/feature/auth/data/firebase_auth_repository.dart';
 import 'package:gtk_flutter/src/feature/auth/domain/app_user.dart';
@@ -11,13 +10,16 @@ class AbrigosRepository {
   const AbrigosRepository(this._firestore);
   final FirebaseFirestore _firestore;
 
-  static String abrigoPath(String uid, String abrigoId) => 'users/$uid/abrigos/$abrigoId';
-  static String abrigosPath(String uid) => 'users/$uid/abrigos';
+  static String abrigoPath(String uid, String abrigoId) => 'abrigo/$abrigoId';
+  static String abrigosPath(String uid) => 'abrigo';
 
   // create
-  Future<void> addAbrigo({required UserID uid, required String name, required int ratePerHour}) => _firestore.collection(abrigosPath(uid)).add({
-        'name': name,
-        'ratePerHour': ratePerHour,
+  Future<void> addAbrigo({required UserID uid, required String nome, required String comentario, required Timestamp data, required bool ativo}) =>
+      _firestore.collection(abrigosPath(uid)).add({
+        'nome': nome,
+        'comentario': comentario,
+        'data': data,
+        'ativo': ativo,
       });
 
   // update
@@ -37,15 +39,16 @@ class AbrigosRepository {
       .map((snapshot) => snapshot.data()!);
 
   Stream<List<Abrigo>> watchAbrigos({required UserID uid}) =>
-      queryAbrigos(uid: uid).snapshots().map((snapshot) => snapshot.docs.map((doc) => doc.data()).toList());
+      queryAbrigos().snapshots().map((snapshot) => snapshot.docs.map((doc) => doc.data()).toList());
 
-  Query<Abrigo> queryAbrigos({required UserID uid}) => _firestore.collection(abrigosPath(uid)).withConverter(
+//  Query<Abrigo> queryAbrigos({required UserID uid}) => _firestore.collection(abrigosPath(uid)).withConverter(
+  Query<Abrigo> queryAbrigos() => _firestore.collection('abrigo').withConverter(
         fromFirestore: (snapshot, _) => Abrigo.fromMap(snapshot.data()!, snapshot.id),
         toFirestore: (abrigo, _) => abrigo.toMap(),
       );
 
   Future<List<Abrigo>> fetchAbrigos({required UserID uid}) async {
-    final abrigos = await queryAbrigos(uid: uid).get();
+    final abrigos = await queryAbrigos().get();
     return abrigos.docs.map((doc) => doc.data()).toList();
   }
 }
@@ -59,17 +62,17 @@ AbrigosRepository abrigosRepository(AbrigosRepositoryRef ref) {
 Query<Abrigo> abrigosQuery(AbrigosQueryRef ref) {
   final user = ref.watch(firebaseAuthProvider).currentUser;
   if (user == null) {
-    throw AssertionError('User can\'t be null');
+    throw AssertionError('Usuário deve ser informado');
   }
   final repository = ref.watch(abrigosRepositoryProvider);
-  return repository.queryAbrigos(uid: user.uid);
+  return repository.queryAbrigos();
 }
 
 @riverpod
 Stream<Abrigo> abrigoStream(AbrigoStreamRef ref, AbrigoID abrigoId) {
   final user = ref.watch(firebaseAuthProvider).currentUser;
   if (user == null) {
-    throw AssertionError('User can\'t be null');
+    throw AssertionError('Usuário deve ser informado');
   }
   final repository = ref.watch(abrigosRepositoryProvider);
   return repository.watchAbrigo(uid: user.uid, abrigoId: abrigoId);

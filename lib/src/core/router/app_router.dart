@@ -4,7 +4,9 @@ import 'package:gtk_flutter/src/core/router/app_startup.dart';
 import 'package:gtk_flutter/src/core/router/go_router_refresh_stream.dart';
 import 'package:gtk_flutter/src/core/router/scaffold_with_nested_navigation.dart';
 import 'package:gtk_flutter/src/core/router/views/not_found_page.dart';
-import 'package:gtk_flutter/src/feature/abrigos/presentation/abrigos_screen.dart';
+import 'package:gtk_flutter/src/feature/abrigos/domain/abrigo.dart';
+import 'package:gtk_flutter/src/feature/abrigos/presentation/abrigos_lista_screen.dart';
+import 'package:gtk_flutter/src/feature/abrigos/presentation/edita_abrigo_screen.dart';
 import 'package:gtk_flutter/src/feature/auth/data/firebase_auth_repository.dart';
 import 'package:gtk_flutter/src/feature/auth/presentation/custom_sign_in_screen.dart';
 import 'package:gtk_flutter/src/feature/entries/presentation/entries_screen.dart';
@@ -23,7 +25,7 @@ final _jobsNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'jobs');
 final _petsNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'pets');
 final _matchesNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'matches');
 
-enum AppRoute { onboarding, signIn, entry, addEntry, editEntry, abrigos, perfil, matches, pets, home }
+enum AppRoute { onboarding, signIn, entry, addAbrigo, editaAbrigo, abrigos, perfil, matches, pets, home }
 
 @riverpod
 GoRouter goRouter(GoRouterRef ref) {
@@ -133,6 +135,34 @@ GoRouter goRouter(GoRouterRef ref) {
                 pageBuilder: (context, state) => const NoTransitionPage(
                   child: AbrigosScreen(),
                 ),
+                routes: [
+                  GoRoute(
+                    path: 'addAbrigo',
+                    name: AppRoute.addAbrigo.name,
+                    parentNavigatorKey: _rootNavigatorKey,
+                    pageBuilder: (context, state) {
+                      return const MaterialPage(
+                        fullscreenDialog: true,
+                        child: EditaAbrigoScreen(),
+                      );
+                    },
+                  ),
+                  GoRoute(
+                    path: 'editaAbrigo:id',
+                    name: AppRoute.editaAbrigo.name,
+                    pageBuilder: (context, state) {
+                      final abrigoId = state.pathParameters['id'];
+                      final abrigo = state.extra as Abrigo?;
+                      return MaterialPage(
+                        fullscreenDialog: true,
+                        child: EditaAbrigoScreen(
+                          abrigoId: abrigoId,
+                          abrigo: abrigo,
+                        ),
+                      );
+                    },
+                  ),
+                ],
               ),
             ],
           ),

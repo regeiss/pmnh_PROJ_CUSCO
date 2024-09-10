@@ -6,18 +6,14 @@ part of 'abrigo_screen_controller.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$abrigosScreenControllerHash() =>
-    r'7fdee47305c1a8d6091955ab02b8dfdc779ee419';
+String _$abrigosScreenControllerHash() => r'7fdee47305c1a8d6091955ab02b8dfdc779ee419';
 
 /// See also [AbrigosScreenController].
 @ProviderFor(AbrigosScreenController)
-final abrigosScreenControllerProvider =
-    AutoDisposeAsyncNotifierProvider<AbrigosScreenController, void>.internal(
+final abrigosScreenControllerProvider = AutoDisposeAsyncNotifierProvider<AbrigosScreenController, void>.internal(
   AbrigosScreenController.new,
   name: r'abrigosScreenControllerProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$abrigosScreenControllerHash,
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product') ? null : _$abrigosScreenControllerHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );

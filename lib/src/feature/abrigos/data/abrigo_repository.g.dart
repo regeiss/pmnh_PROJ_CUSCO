@@ -21,7 +21,7 @@ final abrigosRepositoryProvider = Provider<AbrigosRepository>.internal(
 );
 
 typedef AbrigosRepositoryRef = ProviderRef<AbrigosRepository>;
-String _$abrigosQueryHash() => r'0b4802228eb4dd6b8c8413275b84c03b9849f1a4';
+String _$abrigosQueryHash() => r'710caa9c9cf1661e29a1e876818e041f144edca1';
 
 /// See also [abrigosQuery].
 @ProviderFor(abrigosQuery)
@@ -35,7 +35,7 @@ final abrigosQueryProvider = AutoDisposeProvider<Query<Abrigo>>.internal(
 );
 
 typedef AbrigosQueryRef = AutoDisposeProviderRef<Query<Abrigo>>;
-String _$abrigoStreamHash() => r'6c89e68d906229292e54ab0ac80e5f5ed6e3b0c1';
+String _$abrigoStreamHash() => r'1572eab54c64b923f1b7df1fe904de7e6e0ee26e';
 
 /// Copied from Dart SDK
 class _SystemHash {
