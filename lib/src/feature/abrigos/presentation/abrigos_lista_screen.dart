@@ -78,7 +78,7 @@ class AbrigoListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(abrigo.nome),
-      subtitle: Text(DateFormat('EEEE, MMM d, yyyy').format(abrigo.data.toDate())),
+      subtitle: Text(DateFormat('dd/MM/yyyy').format(abrigo.data.toDate())),
       trailing: const Icon(Icons.chevron_right),
       onTap: onTap,
     );

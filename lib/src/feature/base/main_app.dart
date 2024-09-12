@@ -4,6 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:gtk_flutter/src/theme/theme_data.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../core/router/app_router.dart';
+import 'package:intl/intl.dart';
 
 class MainApp extends ConsumerWidget {
   const MainApp({super.key});
@@ -11,6 +12,8 @@ class MainApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final goRouter = ref.watch(goRouterProvider);
+
+    Intl.defaultLocale = "pt_BR";
 
     return MaterialApp.router(
       routerConfig: goRouter,

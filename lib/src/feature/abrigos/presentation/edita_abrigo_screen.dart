@@ -8,6 +8,7 @@ import 'package:gtk_flutter/src/constants/breakpoints.dart';
 import 'package:gtk_flutter/src/feature/abrigos/domain/abrigo.dart';
 import 'package:gtk_flutter/src/feature/abrigos/presentation/controller/edit_abrigo_screen_controller.dart';
 import 'package:gtk_flutter/src/utils/async_value_ui.dart';
+import 'package:intl/intl.dart';
 
 class EditaAbrigoScreen extends ConsumerStatefulWidget {
   const EditaAbrigoScreen({super.key, this.abrigoId, this.abrigo});
@@ -141,6 +142,7 @@ class _EditAbrigoPageState extends ConsumerState<EditaAbrigoScreen> {
   }
 
   Widget _buildDate() {
+    DateFormat.yMd();
     return DateTimePicker(
       labelText: 'Data criado-alterado',
       selectedDate: _criadoDate,

@@ -20,24 +20,24 @@ class EditAbrigoScreenController extends _$EditAbrigoScreenController {
     if (currentUser == null) {
       throw AssertionError('Usuário não pode ser null');
     }
-    // set loading state
+    // seta loading state
     state = const AsyncLoading().copyWithPrevious(state);
-    // check if nome is already in use
+    //
     final repository = ref.read(abrigosRepositoryProvider);
     final abrigos = await repository.fetchAbrigos(uid: currentUser.uid);
     final allLowerCaseNames = abrigos.map((abrigo) => abrigo.nome.toLowerCase()).toList();
-    // it's ok to use the same nome as the old abrigo
+    //
     if (oldAbrigo != null) {
       allLowerCaseNames.remove(oldAbrigo.nome.toLowerCase());
     }
-    // check if nome is already used
+    //
     if (allLowerCaseNames.contains(nome.toLowerCase())) {
       state = AsyncError(AbrigoSubmitException(), StackTrace.current);
       return false;
     } else {
-      // abrigo previously existed
+      //
       if (abrigoId != null) {
-        final abrigo = Abrigo(id: abrigoId, nome: nome, comentario: comentario, ativo: ativo, data: Timestamp.fromDate(DateTime.now()));
+        final abrigo = Abrigo(id: abrigoId, nome: nome, comentario: comentario, ativo: ativo, data: data);
         state = await AsyncValue.guard(
           () => repository.updateAbrigo(uid: currentUser.uid, abrigo: abrigo),
         );
