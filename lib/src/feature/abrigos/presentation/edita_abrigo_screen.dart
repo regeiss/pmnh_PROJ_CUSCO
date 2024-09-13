@@ -145,9 +145,9 @@ class _EditAbrigoPageState extends ConsumerState<EditaAbrigoScreen> {
     DateFormat.yMd();
     return DateTimePicker(
       labelText: 'Data criado-alterado',
-      selectedDate: _criadoDate,
-      selectedTime: _startTime,
-      onSelectedDate: (date) => setState(() => _criadoDate = date),
+      selectedDate: _data!.toDate(),
+      selectedTime: TimeOfDay.now(),
+      onSelectedDate: (date) => setState(() => _data = Timestamp.fromDate(date)),
     );
   }
 

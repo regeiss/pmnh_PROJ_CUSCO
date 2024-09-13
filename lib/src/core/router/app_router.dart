@@ -9,8 +9,9 @@ import 'package:gtk_flutter/src/feature/abrigos/presentation/abrigos_lista_scree
 import 'package:gtk_flutter/src/feature/abrigos/presentation/edita_abrigo_screen.dart';
 import 'package:gtk_flutter/src/feature/auth/data/firebase_auth_repository.dart';
 import 'package:gtk_flutter/src/feature/auth/presentation/custom_sign_in_screen.dart';
-import 'package:gtk_flutter/src/feature/entries/presentation/entries_screen.dart';
+
 import 'package:gtk_flutter/src/feature/home/presentation/home_screen.dart';
+import 'package:gtk_flutter/src/feature/matches/presentation/matches_screen.dart';
 import 'package:gtk_flutter/src/feature/onboarding/data/onboarding_repository.dart';
 import 'package:gtk_flutter/src/feature/onboarding/views/onboarding_screen.dart';
 import 'package:gtk_flutter/src/feature/pets/presentation/pets_screen.dart';
@@ -173,7 +174,7 @@ GoRouter goRouter(GoRouterRef ref) {
                 path: '/matches',
                 name: AppRoute.matches.name,
                 pageBuilder: (context, state) => const NoTransitionPage(
-                  child: EntriesScreen(),
+                  child: MatchesScreen(),
                 ),
               ),
             ],
