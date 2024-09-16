@@ -44,6 +44,8 @@ dependencies:
   firebase_ui_oauth_facebook: ^1.2.21
   firebase_ui_oauth_twitter: ^1.2.21
   firebase_storage: ^12.2.0
+  connectivity_plus: ^6.0.5
+  image_picker: ^1.1.2
 
 dev_dependencies:
   flutter_test:
@@ -56,7 +58,6 @@ dev_dependencies:
   riverpod_generator: ^3.0.0-dev.11
   riverpod_lint: ^3.0.0-dev.4
   image_cropper: ^8.0.2
-  image_picker: ^1.1.2
 # The following section is specific to Flutter packages.
 flutter:
   generate: true

@@ -3,10 +3,10 @@ import 'package:go_router/go_router.dart';
 import 'package:gtk_flutter/src/core/router/app_startup.dart';
 import 'package:gtk_flutter/src/core/router/go_router_refresh_stream.dart';
 import 'package:gtk_flutter/src/core/router/scaffold_with_nested_navigation.dart';
-import 'package:gtk_flutter/src/core/router/views/not_found_page.dart';
-import 'package:gtk_flutter/src/feature/abrigos/domain/abrigo.dart';
-import 'package:gtk_flutter/src/feature/abrigos/presentation/abrigos_lista_screen.dart';
-import 'package:gtk_flutter/src/feature/abrigos/presentation/edita_abrigo_screen.dart';
+import 'package:gtk_flutter/src/core/router/presentation/not_found_page.dart';
+import 'package:gtk_flutter/src/feature/abrigo/domain/abrigo.dart';
+import 'package:gtk_flutter/src/feature/abrigo/presentation/screen/abrigo_lista_screen.dart';
+import 'package:gtk_flutter/src/feature/abrigo/presentation/screen/edita_abrigo_screen.dart';
 import 'package:gtk_flutter/src/feature/auth/data/firebase_auth_repository.dart';
 import 'package:gtk_flutter/src/feature/auth/presentation/custom_sign_in_screen.dart';
 
@@ -14,7 +14,9 @@ import 'package:gtk_flutter/src/feature/home/presentation/home_screen.dart';
 import 'package:gtk_flutter/src/feature/matches/presentation/matches_screen.dart';
 import 'package:gtk_flutter/src/feature/onboarding/data/onboarding_repository.dart';
 import 'package:gtk_flutter/src/feature/onboarding/views/onboarding_screen.dart';
-import 'package:gtk_flutter/src/feature/pets/presentation/pets_screen.dart';
+import 'package:gtk_flutter/src/feature/pet/domain/pet.dart';
+import 'package:gtk_flutter/src/feature/pet/presentation/screen/pet_lista_screen.dart';
+import 'package:gtk_flutter/src/feature/pet/presentation/screen/pet_screen.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 part 'app_router.g.dart';
@@ -26,13 +28,14 @@ final _jobsNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'jobs');
 final _petsNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'pets');
 final _matchesNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'matches');
 
-enum AppRoute { onboarding, signIn, entry, addAbrigo, editaAbrigo, abrigos, perfil, matches, pets, home }
+enum AppRoute { onboarding, signIn, entry, addAbrigo, editaAbrigo, abrigos, perfil, matches, pets, editaPet, addPet,  home }
 
 @riverpod
 GoRouter goRouter(GoRouterRef ref) {
   // rebuild GoRouter when app startup state changes
   final appStartupState = ref.watch(appStartupProvider);
   final authRepository = ref.watch(authRepositoryProvider);
+
   return GoRouter(
     initialLocation: '/signIn',
     navigatorKey: _rootNavigatorKey,
@@ -55,6 +58,7 @@ GoRouter goRouter(GoRouterRef ref) {
         }
         return null;
       }
+
       final isLoggedIn = authRepository.currentUser != null;
       if (isLoggedIn) {
         if (path.startsWith('/startup') || path.startsWith('/onboarding') || path.startsWith('/signIn')) {
@@ -72,6 +76,7 @@ GoRouter goRouter(GoRouterRef ref) {
       return null;
     },
     refreshListenable: GoRouterRefreshStream(authRepository.authStateChanges()),
+
     routes: [
       GoRoute(
         path: '/startup',
@@ -97,6 +102,7 @@ GoRouter goRouter(GoRouterRef ref) {
           child: CustomSignInScreen(),
         ),
       ),
+
       // https://github.com/flutter/packages/blob/main/packages/go_router/example/lib/stateful_shell_route.dart
       StatefulShellRoute.indexedStack(
         pageBuilder: (context, state, navigationShell) => NoTransitionPage(
@@ -124,6 +130,34 @@ GoRouter goRouter(GoRouterRef ref) {
                 pageBuilder: (context, state) => const NoTransitionPage(
                   child: PetsScreen(),
                 ),
+                routes: [
+                  GoRoute(
+                    path: 'addPet',
+                    name: AppRoute.addPet.name,
+                    parentNavigatorKey: _rootNavigatorKey,
+                    pageBuilder: (context, state) {
+                      return const MaterialPage(
+                        fullscreenDialog: true,
+                        child: EditaPetScreen(),
+                      );
+                    },
+                  ),
+                  GoRoute(
+                    path: 'editaPet:id',
+                    name: AppRoute.editaPet.name,
+                    pageBuilder: (context, state) {
+                      final petId = state.pathParameters['id'];
+                      final pet = state.extra as Pet?;
+                      return MaterialPage(
+                        fullscreenDialog: true,
+                        child: EditaPetScreen(
+                          petId: petId,
+                          pet: pet,
+                        ),
+                      );
+                    },
+                  ),
+                ],
               ),
             ],
           ),
