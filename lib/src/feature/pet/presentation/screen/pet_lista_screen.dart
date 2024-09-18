@@ -81,7 +81,7 @@ class PetListTile extends StatelessWidget {
         fit: BoxFit.fill,
       ),
       title: Text(pet.nome),
-      subtitle: Text(DateFormat('dd/MM/yyyy').format(pet.data.toDate())),
+      subtitle: Text(DateFormat('dd/MM/yyyy').format(pet.data)),
       trailing: const Icon(Icons.chevron_right),
       onTap: onTap,
     );

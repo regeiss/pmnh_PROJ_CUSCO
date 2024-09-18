@@ -19,7 +19,7 @@ class EditPetScreenController extends _$EditPetScreenController {
       Pet? oldPet,
       required String nome,
       required String comentario,
-      required Timestamp data,
+      required DateTime data,
       required bool ativo,
       required String imageURLString}) async {
     final currentUser = ref.read(authRepositoryProvider).currentUser;

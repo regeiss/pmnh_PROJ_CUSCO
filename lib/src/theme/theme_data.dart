@@ -8,33 +8,39 @@ class GlobalThemeData {
   static ThemeData darkThemeData = themeData(darkColorScheme, _darkFocusColor);
   static ThemeData themeData(ColorScheme colorScheme, Color focusColor) {
     return ThemeData(
-        colorScheme: colorScheme,
-        canvasColor: colorScheme.surfaceTint,
-        scaffoldBackgroundColor: colorScheme.surface,
-        highlightColor: Colors.transparent,
-        focusColor: focusColor,
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            foregroundColor: Colors.white,
-            backgroundColor: Colors.blue,
-          ),
-        ),
-        appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.blue,
+      colorScheme: colorScheme,
+      canvasColor: colorScheme.surfaceTint,
+      scaffoldBackgroundColor: colorScheme.surface,
+      highlightColor: Colors.transparent,
+      focusColor: focusColor,
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
           foregroundColor: Colors.white,
-          elevation: 2.0,
-          centerTitle: true,
+          backgroundColor: Colors.blue,
         ),
-        datePickerTheme: const DatePickerThemeData(
-          backgroundColor: Colors.white,
-          dividerColor: Colors.blueAccent,
-          headerBackgroundColor: Colors.blueAccent,
-          headerForegroundColor: Colors.white,
-        )
-        //),
-        //bottomNavigationBarTheme: BottomNavigationBarThemeData(),
-        //inputDecorationTheme: InputDecorationTheme(TextStyle(fontSize: 10))),
-        );
+      ),
+      appBarTheme: const AppBarTheme(
+        backgroundColor: Colors.blue,
+        foregroundColor: Colors.white,
+        elevation: 2.0,
+        centerTitle: true,
+      ),
+      datePickerTheme: const DatePickerThemeData(
+        backgroundColor: Colors.white,
+        dividerColor: Colors.blueAccent,
+        headerBackgroundColor: Colors.blueAccent,
+        headerForegroundColor: Colors.white,
+      ),
+      // primaryTextTheme: TextTheme(
+      //    backgroundColor: Colors.white,
+      //   dividerColor: Colors.blueAccent,
+      //   headerBackgroundColor: Colors.blueAccent,
+      //   headerForegroundColor: Colors.white,
+      // ),
+      //),
+      //bottomNavigationBarTheme: BottomNavigationBarThemeData(),
+      //inputDecorationTheme: InputDecorationTheme(TextStyle(fontSize: 10))),
+    );
   }
 
   static const ColorScheme lightColorScheme = ColorScheme(

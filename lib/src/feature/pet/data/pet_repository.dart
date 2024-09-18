@@ -18,13 +18,13 @@ class PetsRepository {
           {required UserID uid,
           required String nome,
           required String comentario,
-          required Timestamp data,
+          required DateTime data,
           required bool ativo,
           required String imageURLString}) =>
       _firestore.collection(petsPath(uid)).add({
         'nome': nome,
         'comentario': comentario,
-        'data': data,
+        'data': data.millisecondsSinceEpoch,
         'ativo': ativo,
       });
 

@@ -9,6 +9,7 @@ import 'package:gtk_flutter/src/feature/pet/domain/pet.dart';
 import 'package:gtk_flutter/src/feature/pet/presentation/controller/edita_pet_screen_controller.dart';
 import 'package:gtk_flutter/src/utils/async_value_ui.dart';
 import 'package:intl/intl.dart';
+import 'package:image_picker/image_picker.dart';
 
 class EditaPetScreen extends ConsumerStatefulWidget {
   const EditaPetScreen({super.key, this.petId, this.pet});
@@ -21,24 +22,21 @@ class EditaPetScreen extends ConsumerStatefulWidget {
 
 class _EditPetPageState extends ConsumerState<EditaPetScreen> {
   final _formKey = GlobalKey<FormState>();
-
-  late DateTime _criadoDate;
+  late DateTime _startDate;
   late TimeOfDay _startTime;
-
-  DateTime get start => DateTime(_criadoDate.year, _criadoDate.month, _criadoDate.day, _startTime.hour, _startTime.minute);
-  //late String _comentario;
-
   String? _nome;
   String? _comentario;
-  Timestamp? _data;
+  DateTime? _data;
   bool? _ativo;
   String? _imageURLString;
 
   @override
   void initState() {
     super.initState();
-    _criadoDate = DateTime.now();
-    _startTime = TimeOfDay.now();
+
+    final start = widget.pet?.data ?? DateTime.now();
+    _startDate = DateTime(start.year, start.month, start.day);
+    _startTime = TimeOfDay.fromDateTime(start);
 
     if (widget.pet != null) {
       _nome = widget.pet?.nome;
@@ -47,6 +45,11 @@ class _EditPetPageState extends ConsumerState<EditaPetScreen> {
       _ativo = widget.pet?.ativo;
       _imageURLString = widget.pet?.imageURLString;
     }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   bool _validateAndSaveForm() {
@@ -64,7 +67,7 @@ class _EditPetPageState extends ConsumerState<EditaPetScreen> {
             petId: widget.petId,
             oldPet: widget.pet,
             nome: _nome ?? '',
-            data: _data ?? Timestamp.fromDate(DateTime.now()),
+            data: _data ?? DateTime.now(),
             comentario: _comentario ?? "",
             ativo: _ativo ?? false,
             imageURLString: _imageURLString ?? "",
@@ -81,6 +84,7 @@ class _EditPetPageState extends ConsumerState<EditaPetScreen> {
       editPetScreenControllerProvider,
       (_, state) => state.showAlertDialogOnError(context),
     );
+
     final state = ref.watch(editPetScreenControllerProvider);
     return Scaffold(
       appBar: AppBar(
@@ -143,21 +147,9 @@ class _EditPetPageState extends ConsumerState<EditaPetScreen> {
         initialValue: _comentario != null ? '$_comentario' : null,
         onSaved: (value) => _comentario = value,
       ),
-      _buildDate(),
+      _buildDatePicker(),
       _buildCheckBox(),
     ];
-  }
-
-  Widget _buildDate() {
-    DateFormat.yMd();
-    return Row(children: <Widget>[
-      DateTimePicker(
-        labelText: 'Data criado-alterado',
-        selectedDate: _data!.toDate(),
-        selectedTime: TimeOfDay.fromDateTime(_data!.toDate()),
-        onSelectedDate: (date) => setState(() => _data = Timestamp.fromDate(date)),
-      )
-    ]);
   }
 
   Widget _buildCheckBox() {
@@ -166,6 +158,7 @@ class _EditPetPageState extends ConsumerState<EditaPetScreen> {
         "ativo",
         // style: Theme.of(context).textTheme.titleLarge,
       ),
+      checkboxSemanticLabel: "ativo",
       value: _ativo,
       tristate: true,
       onChanged: (bool? value) {
@@ -182,7 +175,7 @@ class _EditPetPageState extends ConsumerState<EditaPetScreen> {
   }
 
   Widget _buildComment() {
-    return TextField(
+    return TextFormField(
       keyboardType: TextInputType.text,
       maxLength: 50,
       controller: TextEditingController(text: _comentario),
@@ -193,7 +186,17 @@ class _EditPetPageState extends ConsumerState<EditaPetScreen> {
       keyboardAppearance: Brightness.light,
       style: const TextStyle(fontSize: 20.0, color: Colors.black),
       maxLines: null,
-      onChanged: (comentario) => _comentario = comentario,
+      onChanged: (value) => _comentario = value,
+    );
+  }
+
+  Widget _buildDatePicker() {
+    return DateTimePicker(
+      labelText: 'Data',
+      selectedDate: _startDate,
+      selectedTime: _startTime,
+      onSelectedDate: (date) => setState(() => _startDate = date),
+      onSelectedTime: (time) => setState(() => _startTime = time),
     );
   }
 }

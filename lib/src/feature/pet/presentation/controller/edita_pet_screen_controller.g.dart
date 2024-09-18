@@ -7,7 +7,7 @@ part of 'edita_pet_screen_controller.dart';
 // **************************************************************************
 
 String _$editPetScreenControllerHash() =>
-    r'6a3b7dee0d81d2650e79f26418e077a97cad21e4';
+    r'9bfa0418fd93ebe909c9e806d323631d39f05626';
 
 /// See also [EditPetScreenController].
 @ProviderFor(EditPetScreenController)

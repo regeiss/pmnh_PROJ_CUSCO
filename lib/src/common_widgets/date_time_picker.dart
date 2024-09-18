@@ -24,7 +24,7 @@ class DateTimePicker extends StatelessWidget {
     final pickedDate = await showDatePicker(
       context: context,
       initialDate: selectedDate,
-      firstDate: DateTime(2019, 1),
+      firstDate: DateTime(1960, 1),
       lastDate: DateTime(2100),
     );
     if (pickedDate != null && pickedDate != selectedDate) {
@@ -46,7 +46,7 @@ class DateTimePicker extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.end,
       children: <Widget>[
         Expanded(
-          flex: 5,
+          flex: 2,
           child: InputDropdown(
             labelText: labelText,
             valueText: Format.date(selectedDate),
@@ -56,7 +56,7 @@ class DateTimePicker extends StatelessWidget {
         ),
         gapW12,
         Expanded(
-          flex: 4,
+          flex: 2,
           child: InputDropdown(
             valueText: selectedTime.format(context),
             valueStyle: valueStyle,

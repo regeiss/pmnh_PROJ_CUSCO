@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 
 typedef PetID = String;
@@ -9,7 +8,7 @@ class Pet extends Equatable {
   final PetID id;
   final String nome;
   final String comentario;
-  final Timestamp data;
+  final DateTime data;
   final String imageURLString;
   final bool ativo;
 
@@ -20,16 +19,23 @@ class Pet extends Equatable {
   bool get stringify => true;
 
   factory Pet.fromMap(Map<dynamic, dynamic> value, PetID id) {
+    final dataAlt = value['data'] as int;
     return Pet(
         id: id,
         nome: value['nome'],
         ativo: value['ativo'],
-        data: value['data'],
+        data: DateTime.fromMillisecondsSinceEpoch(dataAlt),
         comentario: value['comentario'],
         imageURLString: value['imageURLString']);
   }
 
   Map<String, dynamic> toMap() {
-    return <String, dynamic>{'nome': nome, 'ativo': ativo, 'comentario': comentario, 'data': data, 'imageURLString': imageURLString};
+    return <String, dynamic>{
+      'nome': nome,
+      'ativo': ativo,
+      'comentario': comentario,
+      'data': data.millisecondsSinceEpoch,
+      'imageURLString': imageURLString
+    };
   }
 }
