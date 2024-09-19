@@ -8,7 +8,6 @@ import 'package:gtk_flutter/src/constants/breakpoints.dart';
 import 'package:gtk_flutter/src/feature/pet/domain/pet.dart';
 import 'package:gtk_flutter/src/feature/pet/presentation/controller/edita_pet_screen_controller.dart';
 import 'package:gtk_flutter/src/utils/async_value_ui.dart';
-import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart';
 
 class EditaPetScreen extends ConsumerStatefulWidget {
@@ -24,6 +23,9 @@ class _EditPetPageState extends ConsumerState<EditaPetScreen> {
   final _formKey = GlobalKey<FormState>();
   late DateTime _startDate;
   late TimeOfDay _startTime;
+
+  // DateTime get _data => DateTime(_startDate.year, _startDate.month, _startDate.day, _startTime.hour, _startTime.minute);
+
   String? _nome;
   String? _comentario;
   DateTime? _data;
@@ -63,11 +65,13 @@ class _EditPetPageState extends ConsumerState<EditaPetScreen> {
 
   Future<void> _submit() async {
     if (_validateAndSaveForm()) {
+      DateTime dataAlt = DateTime(_startDate.year, _startDate.month, _startDate.day, _startTime.hour, _startTime.minute);
+
       final success = await ref.read(editPetScreenControllerProvider.notifier).submit(
             petId: widget.petId,
             oldPet: widget.pet,
             nome: _nome ?? '',
-            data: _data ?? DateTime.now(),
+            data: dataAlt ?? DateTime.now(),
             comentario: _comentario ?? "",
             ativo: _ativo ?? false,
             imageURLString: _imageURLString ?? "",

@@ -41,7 +41,7 @@ class DateTimePicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final valueStyle = Theme.of(context).textTheme.titleLarge!;
+    final valueStyle = Theme.of(context).textTheme.bodyLarge!;
     return Row(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: <Widget>[
@@ -54,9 +54,9 @@ class DateTimePicker extends StatelessWidget {
             onPressed: () => _selectDate(context),
           ),
         ),
-        gapW12,
+        gapW4,
         Expanded(
-          flex: 2,
+          flex: 1,
           child: InputDropdown(
             valueText: selectedTime.format(context),
             valueStyle: valueStyle,
