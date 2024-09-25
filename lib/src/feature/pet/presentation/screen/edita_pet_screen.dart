@@ -8,7 +8,7 @@ import 'package:gtk_flutter/src/constants/breakpoints.dart';
 import 'package:gtk_flutter/src/feature/pet/domain/pet.dart';
 import 'package:gtk_flutter/src/feature/pet/presentation/controller/edita_pet_screen_controller.dart';
 import 'package:gtk_flutter/src/utils/async_value_ui.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class EditaPetScreen extends ConsumerStatefulWidget {
   const EditaPetScreen({super.key, this.petId, this.pet});
@@ -31,6 +31,9 @@ class _EditPetPageState extends ConsumerState<EditaPetScreen> {
   DateTime? _data;
   bool? _ativo;
   String? _imageURLString;
+
+  String selectedID = "";
+  late List<DropdownMenuItem<String>>? dataRaca;
 
   @override
   void initState() {
@@ -71,7 +74,7 @@ class _EditPetPageState extends ConsumerState<EditaPetScreen> {
             petId: widget.petId,
             oldPet: widget.pet,
             nome: _nome ?? '',
-            data: dataAlt ?? DateTime.now(),
+            data: dataAlt,
             comentario: _comentario ?? "",
             ativo: _ativo ?? false,
             imageURLString: _imageURLString ?? "",
@@ -134,9 +137,14 @@ class _EditPetPageState extends ConsumerState<EditaPetScreen> {
 
   List<Widget> _buildFormChildren() {
     return [
-      Image.network(
-        _imageURLString!,
-        fit: BoxFit.fill,
+      CachedNetworkImage(
+        imageUrl: _imageURLString ?? "https://via.placeholder.com/350x350",
+        progressIndicatorBuilder: (context, url, downloadProgress) => Center(child: CircularProgressIndicator(value: downloadProgress.progress)),
+        errorWidget: (context, url, error) => const Icon(Icons.error),
+        // width: 300, //MediaQuery.of(context).size.width,
+        // height: 300,
+        fit: BoxFit.cover,
+        fadeInCurve: Curves.bounceOut,
       ),
       TextFormField(
         decoration: const InputDecoration(labelText: 'Nome'),
@@ -153,15 +161,13 @@ class _EditPetPageState extends ConsumerState<EditaPetScreen> {
       ),
       _buildDatePicker(),
       _buildCheckBox(),
+      _buildDropDown(),
     ];
   }
 
   Widget _buildCheckBox() {
     return CheckboxListTile(
-      title: Text(
-        "ativo",
-        // style: Theme.of(context).textTheme.titleLarge,
-      ),
+      title: const Text("ativo"),
       checkboxSemanticLabel: "ativo",
       value: _ativo,
       tristate: true,
@@ -203,4 +209,37 @@ class _EditPetPageState extends ConsumerState<EditaPetScreen> {
       onSelectedTime: (time) => setState(() => _startTime = time),
     );
   }
+
+  Widget _buildDropDown() {
+    selectedID = "Fox";
+    return DropdownButtonFormField(
+      decoration: InputDecoration(
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.blue, width: 2),
+          borderRadius: BorderRadius.circular(20),
+        ),
+        border: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.blue, width: 2),
+          borderRadius: BorderRadius.circular(20),
+        ),
+        filled: true,
+        fillColor: Colors.blueAccent,
+      ),
+      dropdownColor: Colors.blueAccent,
+      value: selectedID,
+      onChanged: (String? newValue) {
+        setState(() {
+          selectedID = newValue!;
+        });
+      },
+      items: <String>['Fox', 'Beagle', 'Pastor', 'Schnauzer'].map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      }).toList(),
+    );
+  }
+
+  Widget _buildImageSelector() {}
 }

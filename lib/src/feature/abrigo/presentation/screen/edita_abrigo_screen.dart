@@ -157,10 +157,7 @@ class _EditAbrigoPageState extends ConsumerState<EditaAbrigoScreen> {
 
   Widget _buildCheckBox() {
     return CheckboxListTile(
-      title: Text(
-        "ativo",
-        style: Theme.of(context).textTheme.titleLarge,
-      ),
+      title: const Text("ativo"),
       value: _ativo,
       tristate: true,
       onChanged: (bool? value) {
@@ -173,22 +170,6 @@ class _EditAbrigoPageState extends ConsumerState<EditaAbrigoScreen> {
         borderRadius: BorderRadius.circular(4),
       ),
       controlAffinity: ListTileControlAffinity.trailing,
-    );
-  }
-
-  Widget _buildComment() {
-    return TextField(
-      keyboardType: TextInputType.text,
-      maxLength: 50,
-      controller: TextEditingController(text: _comentario),
-      decoration: const InputDecoration(
-        labelText: 'Comment',
-        labelStyle: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500),
-      ),
-      keyboardAppearance: Brightness.light,
-      style: const TextStyle(fontSize: 20.0, color: Colors.black),
-      maxLines: null,
-      onChanged: (comentario) => _comentario = comentario,
     );
   }
 }

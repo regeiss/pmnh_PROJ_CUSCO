@@ -1,0 +1,65 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "proj_cusco",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "proj_cusco (profile mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "proj_cusco (release mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "501",
+            "cwd": ".Trashes\\501",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "501 (profile mode)",
+            "cwd": ".Trashes\\501",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "501 (release mode)",
+            "cwd": ".Trashes\\501",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "flutter_login",
+            "cwd": ".Trashes\\501\\flutter_login",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "flutter_login (profile mode)",
+            "cwd": ".Trashes\\501\\flutter_login",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "flutter_login (release mode)",
+            "cwd": ".Trashes\\501\\flutter_login",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        }
+    ]
+}

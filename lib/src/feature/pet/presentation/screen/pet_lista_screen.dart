@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_ui_firestore/firebase_ui_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -34,6 +35,7 @@ class PetsScreen extends ConsumerWidget {
             petsScreenControllerProvider,
             (_, state) => state.showAlertDialogOnError(context),
           );
+
           final petsQuery = ref.watch(petsQueryProvider);
           return FirestoreListView<Pet>(
             query: petsQuery,
@@ -76,8 +78,8 @@ class PetListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: Image.network(
-        pet.imageURLString,
+      leading: CachedNetworkImage(
+        imageUrl: pet.imageURLString,
         fit: BoxFit.fill,
       ),
       title: Text(pet.nome),
